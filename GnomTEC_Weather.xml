@@ -49,7 +49,50 @@
 			<Color r="0.25" g="0.25" b="0.25"/>
 			<BackgroundInsets left="5" right="5" top="5" bottom="5"/>
 		</Backdrop>
+		<Layers>
+			<Layer>
+				<FontString name="$parent_TITLE" inherits="GameFontNormalLeft">
+					<Color r="1.0" g="1.0" b="0.5"/>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="135" y="-10"/>
+						</Anchor>
+						<Anchor point="RIGHT">
+							<Offset x="-50" y="0"/>
+						</Anchor>
+					</Anchors>
+					<Size x="200" y="14" />
+				</FontString>
+			</Layer>
+		</Layers>		
 		<Frames>
+			<Button name="$parent_CloseButton" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parent_CONFIGURATION">
+				<Size>
+					<AbsDimension x="14" y="14"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+						<Offset x="-25" y="-9" />
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\ICONS\INV_Gizmo_02" />
+				<PushedTexture file="Interface\ICONS\INV_Gizmo_02" />
+				<HighlightTexture file="Interface\ICONS\INV_Gizmo_02" alphaMode="ADD"/>
+				<Scripts>
+					<OnClick>
+						GnomTEC_Weather:OpenConfiguration();		
+					</OnClick>
+				</Scripts>
+			</Button>			
 			<Frame name="$parent_PICTOGRAM">
 				<Size x="128" y="128" />
 				<Anchors>
@@ -66,7 +109,7 @@
 			<ScrollFrame name="$parent_SCROLL" resizable="true" setAllPoints="true">
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="135" y="-7"/>
+						<Offset x="135" y="-27"/>
 					</Anchor>
 					<Anchor point="BOTTOMRIGHT">
 						<Offset x="-7" y="7" />

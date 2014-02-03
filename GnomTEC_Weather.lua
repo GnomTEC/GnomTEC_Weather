@@ -1,6 +1,6 @@
 ﻿-- **********************************************************************
 -- GnomTEC Weather
--- Version: 5.4.2.1
+-- Version: 5.4.2.2
 -- Author: GnomTEC
 -- Copyright 2014 by GnomTEC
 -- http://www.gnomtec.de/
@@ -9,14 +9,41 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("GnomTEC_Weather")
 
 -- ----------------------------------------------------------------------
--- Legacy global variables and constants (will be deleted in future)
--- ----------------------------------------------------------------------
--- remove local later
-GnomTEC_Weather_Options = { }
-
--- ----------------------------------------------------------------------
 -- Addon global Constants (local)
 -- ----------------------------------------------------------------------
+
+-- default data for database
+local defaultsDb = {
+	realm = {
+		["Weather"] = {
+			["Stormwind"] = {
+				["20140125"] = { 
+					["MORNING"] = {
+						["TIME"] = 0646,
+						["PICTOGRAM"] = "DAY_PARTLY_DRY",
+						["DESCRIPTION"] = "Kalt, frostig... jedoch nur leicht bewölkt. Zieht eure Handschuhe an.",
+					},
+					["MIDDAY"] = {
+						["TIME"] = 1143,
+						["PICTOGRAM"] = "DAY_CLEAR",
+						["DESCRIPTION"] = "Die Sonne bricht durch dich sich auflösende Wolkenschicht. Es ist frisch und kalt, aber was erwartet man auch anderes vom WInter? Der Schnee an den Straßenrändern färbt sich langsam gräulich.|nHolzfäller sowie Pelzhändler machen gewiss gute Geschäfte.",
+					},
+					["EVENING"] = {
+						["TIME"] = 1613,
+						["PICTOGRAM"] = "DAY_CLEAR",
+						["DESCRIPTION"] = "Kalt, einfach nur verflucht kalt. Beim Sprechen bilden sich kleine Wölkchen und man ist versucht sich noch ein zweites paar Handschuhe drüber zu ziehen. Die Sonne geht um 17.13Uhr unter. Vermutlich nutzt der ein oder Andere die frühe Dunkelheit um in den Wald zu gehen und unerlaubt sich etwas abzuholzen. ",
+					},
+					["NIGHT"] = {
+						["TIME"] = 2019,
+						["PICTOGRAM"] = "NIGHT_CLEAR",
+						["DESCRIPTION"] = "Sternenklar und beide Monde sorgen für etwas Licht am Himmel. Was für den einen Kalt- romatisch ist ist für den Anderen sich den Allerwertesten abfrieren. Kennen die Götter den keine Gnade? Perfektes Wetter um keine Raubzüge zu machen oder sich heimlich im Wald etwas Holz zu stibitzen, irgendwie muss man ja über die Runden kommen.",
+					}
+				}
+			}
+		}
+	}
+}
+
 local weatherTexturesDayList = {
 	["NONE"] = "NONE", 
 	["DAY_CLEAR"] = "DAY_CLEAR",
@@ -72,6 +99,7 @@ local weatherTexturesNight = {
 -- ----------------------------------------------------------------------
 -- Addon global variables (local)
 -- ----------------------------------------------------------------------
+local panelConfiguration = nil
 
 -- Main options menue with general addon information
 local optionsMain = {
@@ -141,7 +169,7 @@ local optionsWeather = {
 				WeatherOptionMorningPictogramTexture = {
 					type = "description",
 					name = "",
-					image = function(info) return weatherTexturesDay[GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MORNING"]["PICTOGRAM"]] end,
+					image = function(info) return weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["PICTOGRAM"]] end,
 					imageCoords = {0.0,1.0,0.0,1.0},
 					imageWidth = 32,
 					imageHeight = 32,
@@ -154,16 +182,16 @@ local optionsWeather = {
 					name = L["L_OPTIONS_WEATHER_PICTOGRAM"],
 					values =  weatherTexturesDayList,
 					desc = "",
-					set = function(info,val) GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MORNING"]["PICTOGRAM"] = val end,
-					get = function(info) return GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MORNING"]["PICTOGRAM"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["PICTOGRAM"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["PICTOGRAM"] end,
 					order = 1
 				},
 				WeatherOptionMorningWeather = {
 					type = "input",
 					name = L["L_OPTIONS_WEATHER_DESCRIPTION"],
 					desc = "",
-					set = function(info,val) GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MORNING"]["DESCRIPTION"] = val end,
-					get = function(info) return GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MORNING"]["DESCRIPTION"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["DESCRIPTION"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["DESCRIPTION"] end,
 					multiline = 5,
 					width = 'full',
 					order = 2
@@ -179,7 +207,7 @@ local optionsWeather = {
 				WeatherOptionMiddayPictogramTexture = {
 					type = "description",
 					name = "",
-					image = function(info) return weatherTexturesDay[GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MIDDAY"]["PICTOGRAM"]] end,
+					image = function(info) return weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["PICTOGRAM"]] end,
 					imageCoords = {0.0,1.0,0.0,1.0},
 					imageWidth = 32,
 					imageHeight = 32,
@@ -192,16 +220,16 @@ local optionsWeather = {
 					name = L["L_OPTIONS_WEATHER_PICTOGRAM"],
 					values =  weatherTexturesDayList,
 					desc = "",
-					set = function(info,val) GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MIDDAY"]["PICTOGRAM"] = val end,
-					get = function(info) return GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MIDDAY"]["PICTOGRAM"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["PICTOGRAM"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["PICTOGRAM"] end,
 					order = 1
 				},
 				WeatherOptionMiddayWeather = {
 					type = "input",
 					name = L["L_OPTIONS_WEATHER_DESCRIPTION"],
 					desc = "",
-					set = function(info,val) GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MIDDAY"]["DESCRIPTION"] = val end,
-					get = function(info) return GnomTEC_Weather_Options["STORMWIND"]["20140125"]["MIDDAY"]["DESCRIPTION"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["DESCRIPTION"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["DESCRIPTION"] end,
 					multiline = 5,
 					width = 'full',
 					order = 2
@@ -217,7 +245,7 @@ local optionsWeather = {
 				WeatherOptionEveningPictogramTexture = {
 					type = "description",
 					name = "",
-					image = function(info) return weatherTexturesDay[GnomTEC_Weather_Options["STORMWIND"]["20140125"]["EVENING"]["PICTOGRAM"]] end,
+					image = function(info) return weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["PICTOGRAM"]] end,
 					imageCoords = {0.0,1.0,0.0,1.0},
 					imageWidth = 32,
 					imageHeight = 32,
@@ -230,16 +258,16 @@ local optionsWeather = {
 					name = L["L_OPTIONS_WEATHER_PICTOGRAM"],
 					values =  weatherTexturesDayList,
 					desc = "",
-					set = function(info,val) GnomTEC_Weather_Options["STORMWIND"]["20140125"]["EVENING"]["PICTOGRAM"] = val end,
-					get = function(info) return GnomTEC_Weather_Options["STORMWIND"]["20140125"]["EVENING"]["PICTOGRAM"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["PICTOGRAM"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["PICTOGRAM"] end,
 					order = 1
 				},
 				WeatherOptionEveningWeather = {
 					type = "input",
 					name = L["L_OPTIONS_WEATHER_DESCRIPTION"],
 					desc = "",
-					set = function(info,val) GnomTEC_Weather_Options["STORMWIND"]["20140125"]["EVENING"]["DESCRIPTION"] = val end,
-					get = function(info) return GnomTEC_Weather_Options["STORMWIND"]["20140125"]["EVENING"]["DESCRIPTION"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["DESCRIPTION"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["DESCRIPTION"] end,
 					multiline = 2,
 					width = 'full',
 					order = 6
@@ -255,7 +283,7 @@ local optionsWeather = {
 				WeatherOptionNightPictogramTexture = {
 					type = "description",
 					name = "",
-					image = function(info) return weatherTexturesNight[GnomTEC_Weather_Options["STORMWIND"]["20140125"]["NIGHT"]["PICTOGRAM"]] end,
+					image = function(info) return weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["PICTOGRAM"]] end,
 					imageCoords = {0.0,1.0,0.0,1.0},
 					imageWidth = 32,
 					imageHeight = 32,
@@ -268,16 +296,16 @@ local optionsWeather = {
 					name = L["L_OPTIONS_WEATHER_PICTOGRAM"],
 					values =  weatherTexturesNightList,
 					desc = "",
-					set = function(info,val) GnomTEC_Weather_Options["STORMWIND"]["20140125"]["NIGHT"]["PICTOGRAM"] = val end,
-					get = function(info) return GnomTEC_Weather_Options["STORMWIND"]["20140125"]["NIGHT"]["PICTOGRAM"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["PICTOGRAM"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["PICTOGRAM"] end,
 					order = 1
 				},
 				WeatherOptionNightWeather = {
 					type = "input",
 					name = L["L_OPTIONS_WEATHER_DESCRIPTION"],
 					desc = "",
-					set = function(info,val) GnomTEC_Weather_Options["STORMWIND"]["20140125"]["NIGHT"]["DESCRIPTION"] = val end,
-					get = function(info) return GnomTEC_Weather_Options["STORMWIND"]["20140125"]["NIGHT"]["DESCRIPTION"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["DESCRIPTION"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["DESCRIPTION"] end,
 					multiline = 5,
 					width = 'full',
 					order = 2
@@ -293,10 +321,7 @@ local optionsWeather = {
 -- ----------------------------------------------------------------------
 
 GnomTEC_Weather = LibStub("AceAddon-3.0"):NewAddon("GnomTEC_Weather", "AceConsole-3.0", "AceEvent-3.0", "AceHook-3.0")
-LibStub("AceConfig-3.0"):RegisterOptionsTable("GnomTEC Weather Main", optionsMain)
-LibStub("AceConfig-3.0"):RegisterOptionsTable("GnomTEC Weather Weather", optionsWeather)
-LibStub("AceConfigDialog-3.0"):AddToBlizOptions("GnomTEC Weather Main", "GnomTEC Weather");
-LibStub("AceConfigDialog-3.0"):AddToBlizOptions("GnomTEC Weather Weather", L["L_OPTIONS_WEATHER"], "GnomTEC Weather");
+
 
 
 -- ----------------------------------------------------------------------
@@ -319,6 +344,7 @@ function GnomTEC_Weather:TimerEvent()
 		lastTimerEvent = t
 		
 		local texture
+		local title
 		local text
 		
 		local hour,minute = GetGameTime();
@@ -335,41 +361,50 @@ function GnomTEC_Weather:TimerEvent()
 			previousDate = string.format("%04u%02u%02u",year-1,12,31)
 		end
 		
-		--- Alpha version demo data only
+		--- Beta version data only for one same day (date not shown yet)
 		actualDate = "20140125"
 		previousDate =	"20140125"
 			
-		if GnomTEC_Weather_Options["STORMWIND"][actualDate] then
-			if (actualTime >= GnomTEC_Weather_Options["STORMWIND"][actualDate]["NIGHT"]["TIME"]) then
-				texture = weatherTexturesNight[GnomTEC_Weather_Options["STORMWIND"][actualDate]["NIGHT"]["PICTOGRAM"]]
-				text = "|cFFFFFF80"..L["L_NIGHT"].." (20:19 - 06:45):|r|n"..GnomTEC_Weather_Options["STORMWIND"][actualDate]["NIGHT"]["DESCRIPTION"]
-			elseif (actualTime >= GnomTEC_Weather_Options["STORMWIND"][actualDate]["EVENING"]["TIME"]) then
-				texture = weatherTexturesDay[GnomTEC_Weather_Options["STORMWIND"][actualDate]["EVENING"]["PICTOGRAM"]]
-				text = "|cFFFFFF80"..L["L_EVENING"].." (16:13 - 20:18):|r|n"..GnomTEC_Weather_Options["STORMWIND"][actualDate]["EVENING"]["DESCRIPTION"]
-			elseif (actualTime >= GnomTEC_Weather_Options["STORMWIND"][actualDate]["MIDDAY"]["TIME"]) then
-				texture = weatherTexturesDay[GnomTEC_Weather_Options["STORMWIND"][actualDate]["MIDDAY"]["PICTOGRAM"]]
-				text = "|cFFFFFF80"..L["L_MIDDAY"].." (11:43 - 16:12):|r|n"..GnomTEC_Weather_Options["STORMWIND"][actualDate]["MIDDAY"]["DESCRIPTION"]
-			elseif (actualTime >= GnomTEC_Weather_Options["STORMWIND"][actualDate]["MORNING"]["TIME"]) then
-				texture = weatherTexturesDay[GnomTEC_Weather_Options["STORMWIND"][actualDate]["MORNING"]["PICTOGRAM"]]
-				text = "|cFFFFFF80"..L["L_MORNING"].." (06:46 - 11:42):|r|n"..GnomTEC_Weather_Options["STORMWIND"][actualDate]["MORNING"]["DESCRIPTION"]
+		if GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate] then
+			if (actualTime >= GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["NIGHT"]["TIME"]) then
+				texture = weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["NIGHT"]["PICTOGRAM"]]
+				title = L["L_NIGHT"].." (20:19 - 06:45):"
+				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["NIGHT"]["DESCRIPTION"]
+			elseif (actualTime >= GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["EVENING"]["TIME"]) then
+				texture = weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["EVENING"]["PICTOGRAM"]]
+				title = L["L_EVENING"].." (16:13 - 20:18):"
+				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["EVENING"]["DESCRIPTION"]
+			elseif (actualTime >= GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MIDDAY"]["TIME"]) then
+				texture = weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MIDDAY"]["PICTOGRAM"]]
+				title = L["L_MIDDAY"].." (11:43 - 16:12):"
+				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MIDDAY"]["DESCRIPTION"]
+			elseif (actualTime >= GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MORNING"]["TIME"]) then
+				texture = weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MORNING"]["PICTOGRAM"]]
+				title = L["L_MORNING"].." (06:46 - 11:42):"
+				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MORNING"]["DESCRIPTION"]
 			else
-				if (GnomTEC_Weather_Options["STORMWIND"][previousDate]) then
-					texture = weatherTexturesNight[GnomTEC_Weather_Options["STORMWIND"][previousDate]["NIGHT"]["PICTOGRAM"]]
-					text = "|cFFFFFF80"..L["L_NIGHT"].." (20:19 - 06:45):|r|n"..GnomTEC_Weather_Options["STORMWIND"][previousDate]["NIGHT"]["DESCRIPTION"]
+				if (GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]) then
+					texture = weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]["NIGHT"]["PICTOGRAM"]]
+					title = L["L_NIGHT"].." (20:19 - 06:45):"
+					text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]["NIGHT"]["DESCRIPTION"]
 				else
 					texture = weatherTexturesDay["NONE"]
+					title = L["L_NIGHT"].." (20:19 - 06:45):"
 					text = "|cFFFF0000Keine Wetterdaten im Augenblick!|r|n"			
 				end
 			end
-		elseif (GnomTEC_Weather_Options["STORMWIND"][previousDate] and (actualTime < 0646)) then
-				texture = weatherTexturesNight[GnomTEC_Weather_Options["STORMWIND"][previousDate]["NIGHT"]["PICTOGRAM"]]
-				text = "|cFFFFFF80"..L["L_NIGHT"].." (20:19 - 06:45):|r|n"..GnomTEC_Weather_Options["STORMWIND"][previousDate]["NIGHT"]["DESCRIPTION"]		
+		elseif (GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate] and (actualTime < 0646)) then
+				texture = weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]["NIGHT"]["PICTOGRAM"]]
+				title = L["L_NIGHT"].." (20:19 - 06:45):"
+				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]["NIGHT"]["DESCRIPTION"]		
 		else
 			texture = weatherTexturesDay["NONE"]
+			title = ""
 			text = "|cFFFF0000Keine Wetterdaten im Augenblick!|r|n"			
 		end
 
 		
+		GNOMTEC_WEATHER_FRAME_TITLE:SetText(title)
 		GNOMTEC_WEATHER_FRAME_SCROLL_DESCRIPTION:SetText(text)
 
 		GNOMTEC_WEATHER_BUTTON_SHOWHIDE:SetNormalTexture(texture)
@@ -380,6 +415,13 @@ function GnomTEC_Weather:TimerEvent()
 		
 	end	
 end
+
+function GnomTEC_Weather:OpenConfiguration()
+	InterfaceOptionsFrame_OpenToCategory(panelConfiguration)
+	-- sometimes first call lands not on desired panel
+	InterfaceOptionsFrame_OpenToCategory(panelConfiguration)
+end
+
 -- ----------------------------------------------------------------------
 -- Hook functions
 -- ----------------------------------------------------------------------
@@ -394,36 +436,14 @@ end
 
 function GnomTEC_Weather:OnInitialize()
  	-- Code that you want to run when the addon is first loaded goes here.
-  
+  	self.db = LibStub("AceDB-3.0"):New("GnomTEC_WeatherDB", defaultsDb, true);
+
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("GnomTEC Weather Main", optionsMain)
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("GnomTEC Weather Weather", optionsWeather)
+	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("GnomTEC Weather Main", "GnomTEC Weather");
+	panelConfiguration = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("GnomTEC Weather Weather", L["L_OPTIONS_WEATHER"], "GnomTEC Weather");
+
   	GnomTEC_Weather:Print(L["L_WELCOME"])
-  	
-  	-- add Alpha Demo Data
-  	if (not GnomTEC_Weather_Options["STORMWIND"]) then
-	  	GnomTEC_Weather_Options["STORMWIND"] = {
-			["20140125"] = { 
-				["MORNING"] = {
-					["TIME"] = 0646,
-					["PICTOGRAM"] = "DAY_PARTLY_DRY",
-					["DESCRIPTION"] = "Kalt, frostig... jedoch nur leicht bewölkt. Zieht eure Handschuhe an.",
-				},
-				["MIDDAY"] = {
-					["TIME"] = 1143,
-					["PICTOGRAM"] = "DAY_CLEAR",
-					["DESCRIPTION"] = "Die Sonne bricht durch dich sich auflösende Wolkenschicht. Es ist frisch und kalt, aber was erwartet man auch anderes vom WInter? Der Schnee an den Straßenrändern färbt sich langsam gräulich.|nHolzfäller sowie Pelzhändler machen gewiss gute Geschäfte.",
-				},
-				["EVENING"] = {
-					["TIME"] = 1613,
-					["PICTOGRAM"] = "DAY_CLEAR",
-					["DESCRIPTION"] = "Kalt, einfach nur verflucht kalt. Beim Sprechen bilden sich kleine Wölkchen und man ist versucht sich noch ein zweites paar Handschuhe drüber zu ziehen. Die Sonne geht um 17.13Uhr unter. Vermutlich nutzt der ein oder Andere die frühe Dunkelheit um in den Wald zu gehen und unerlaubt sich etwas abzuholzen. ",
-				},
-				["NIGHT"] = {
-					["TIME"] = 2019,
-					["PICTOGRAM"] = "NIGHT_CLEAR",
-					["DESCRIPTION"] = "Sternenklar und beide Monde sorgen für etwas Licht am Himmel. Was für den einen Kalt- romatisch ist ist für den Anderen sich den Allerwertesten abfrieren. Kennen die Götter den keine Gnade? Perfektes Wetter um keine Raubzüge zu machen oder sich heimlich im Wald etwas Holz zu stibitzen, irgendwie muss man ja über die Runden kommen.",
-				}
-			}
-		}
-	end
 end
 
 function GnomTEC_Weather:OnEnable()

@@ -12,8 +12,8 @@
 ## Notes-zhCN: Addon to display actual weather for roleplaying.
 ## Notes-zhTW: Addon to display actual weather for roleplaying.
 ## Author: GnomTEC
-## Version: 5.4.2.1
-## SavedVariablesPerCharacter: GnomTEC_Weather_Options
+## Version: 5.4.2.2
+## SavedVariables: GnomTEC_WeatherDB
 
 embeds.xml
 

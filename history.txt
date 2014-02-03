@@ -1,6 +1,9 @@
-GnomTEC Weather Addon - Change History 
-==========================
+== GnomTEC Weather Addon - Change History 
 
-5.4.2.1 (2014-01-25)
-============
-- Initiale Version
+=== 5.4.2.2 (2014-02-xx)
+* Changed history.txt to WikiCreole format
+* Added .pkgmeta file for Curse.com
+* Moved weather data to SavedVariables instead SavedVariablesPerCharacter
+
+=== 5.4.2.1 (2014-01-25)
+* Initiale Version
