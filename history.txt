@@ -1,0 +1,6 @@
+GnomTEC Weather Addon - Change History 
+==========================
+
+5.4.2.1 (2014-01-25)
+============
+- Initiale Version

@@ -1,0 +1,176 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<Frame name="GNOMTEC_WEATHER_BUTTON" parent="UIParent" toplevel="true" movable="true" resizable="false" clampedToScreen="true" hidden="false">
+		<Size x="48" y="48" />
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize val="16"/>
+			<TileSize val="16"/>
+			<Color r="0.25" g="0.25" b="0.25"/>
+			<BackgroundInsets left="5" right="5" top="5" bottom="5"/>
+		</Backdrop>
+		<Frames>
+			<CheckButton name="$parent_SHOWHIDE">
+				<Size x="32" y="32" />
+				<Anchors>
+					<Anchor point="CENTER" relativePoint="CENTER">
+						<Offset x="0" y="0" />
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GnomTEC_Weather\Textures\sun_and_cloud" />
+				<CheckedTexture file="Interface\AddOns\GnomTEC_Weather\Textures\sun_and_cloud" />
+				<HighlightTexture file="Interface\AddOns\GnomTEC_Weather\Textures\sun_and_cloud" alphaMode="ADD"/>
+				<Scripts>
+					<OnClick>
+						if (GNOMTEC_WEATHER_FRAME:IsShown())then 
+							GNOMTEC_WEATHER_FRAME:Hide();
+						else
+							GNOMTEC_WEATHER_FRAME:Show();
+						end
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+		</Frames>
+		<Scripts>
+			<OnMouseDown>self:StartMoving();</OnMouseDown>
+			<OnMouseUp>self:StopMovingOrSizing();</OnMouseUp>
+			<OnUpdate>GnomTEC_Weather:TimerEvent();</OnUpdate>
+		</Scripts>
+	</Frame>
+	<Frame name="GNOMTEC_WEATHER_FRAME" parent="UIParent" toplevel="true" movable="true" resizable="false" clampedToScreen="true" hidden="true">
+		<Size x="400" y="138" />
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize val="16"/>
+			<TileSize val="16"/>
+			<Color r="0.25" g="0.25" b="0.25"/>
+			<BackgroundInsets left="5" right="5" top="5" bottom="5"/>
+		</Backdrop>
+		<Frames>
+			<Frame name="$parent_PICTOGRAM">
+				<Size x="128" y="128" />
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="LEFT">
+						<Offset x="5" y="0" />
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parent_TEXTURE" file="Interface\AddOns\GnomTEC_Weather\Textures\sun_and_cloud" setAllPoints="true"/>
+					</Layer>
+				</Layers>
+			</Frame>
+			<ScrollFrame name="$parent_SCROLL" resizable="true" setAllPoints="true">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="135" y="-7"/>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-7" y="7" />
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<Slider name="$parent_SLIDER" resizable="true" setAllPoints="true">
+						<Anchors>
+							<Anchor point="TOPRIGHT">
+								<Offset x="0" y="-16" />
+							</Anchor>
+							<Anchor point="BOTTOMRIGHT">
+								<Offset x="0" y="16" />
+							</Anchor>
+						</Anchors>	
+						<Size>
+							<AbsDimension x="16" y="43"/>
+						</Size>
+						<Frames>
+							<Button name="$parentScrollUpButton" inherits="UIPanelScrollUpButtonTemplate">
+								<Anchors>
+									<Anchor point="BOTTOM" relativePoint="TOP"/>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										local parent = self:GetParent();
+										parent:SetValue(parent:GetValue() - (parent:GetHeight() / 2));
+										PlaySound("UChatScrollButton");
+									</OnClick>
+									<OnEnter>
+										local parent = self:GetParent();
+										parentOfParent = parent:GetParent();
+										parentOfParent:UpdateScrollChildRect();
+										parent:SetMinMaxValues(0, parentOfParent:GetVerticalScrollRange());
+										parent:SetValue(parentOfParent:GetVerticalScroll());   
+									</OnEnter>
+								</Scripts>
+							</Button>
+							<Button name="$parentScrollDownButton" inherits="UIPanelScrollDownButtonTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativePoint="BOTTOM"/>
+								</Anchors>	
+								<Scripts>
+									<OnClick>
+										local parent = self:GetParent();
+										parent:SetValue(parent:GetValue() + (parent:GetHeight() / 2));
+										PlaySound("UChatScrollButton");
+									</OnClick>
+									<OnEnter>
+										local parent = self:GetParent();
+										parentOfParent = parent:GetParent();
+										parentOfParent:UpdateScrollChildRect();
+										parent:SetMinMaxValues(0, parentOfParent:GetVerticalScrollRange());
+										parent:SetValue(parentOfParent:GetVerticalScroll());   
+									</OnEnter>
+								</Scripts>
+							</Button>
+						</Frames>
+						<Scripts>
+							<OnValueChanged>
+								self:GetParent():SetVerticalScroll(value);
+							</OnValueChanged>
+							<OnEnter>
+								local parent = self:GetParent();
+								parent:UpdateScrollChildRect();
+								self:SetMinMaxValues(0, parent:GetVerticalScrollRange());
+								self:SetValue(parent:GetVerticalScroll());   
+							</OnEnter>
+						</Scripts>
+						<ThumbTexture name="$parentThumbTexture" inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-Knob">
+							<Size>
+								<AbsDimension x="16" y="16"/>
+							</Size>
+						</ThumbTexture>
+					</Slider>
+				</Frames>
+				<ScrollChild>
+					<EditBox name="$parent_DESCRIPTION" parentKey="child" resizable="true" setAllPoints="true" multiline="true" autofocus="false">
+						<FontString inherits="GameFontWhite"/>
+						<Scripts>
+							<OnLoad>
+								self:EnableKeyboard(false);
+								self:EnableMouse(false);	
+							</OnLoad>
+							<OnSizeChanged>
+								local parent = self:GetParent();
+--								self:SetWidth(parent:GetWidth()-16);		
+								parent:UpdateScrollChildRect();
+							</OnSizeChanged>
+						</Scripts>
+					</EditBox>
+				</ScrollChild>
+				<Scripts>
+					<OnSizeChanged>
+						local child = self.child;
+						child:SetWidth(self:GetWidth()-16);		
+						self:UpdateScrollChildRect();
+					</OnSizeChanged>
+				</Scripts>
+			</ScrollFrame>
+		</Frames>
+		<Scripts>
+			<OnMouseDown>self:StartMoving();</OnMouseDown>
+			<OnMouseUp>self:StopMovingOrSizing();</OnMouseUp>
+		</Scripts>
+	</Frame>
+</Ui>

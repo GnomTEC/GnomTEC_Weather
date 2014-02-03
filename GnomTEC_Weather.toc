@@ -1,0 +1,23 @@
+## Interface: 50400
+## Title: GnomTEC_Weather
+## Notes: Addon to display actual weather for roleplaying.
+## Notes-deDE: Addon zur Anzeige des aktuellen Wetters für das Rollenspiel.
+## Notes-esES: Addon to display actual weather for roleplaying.
+## Notes-esMX: Addon to display actual weather for roleplaying.
+## Notes-frFR: Addon to display actual weather for roleplaying.
+## Notes-itIT: Addon to display actual weather for roleplaying.
+## Notes-koKR: Addon to display actual weather for roleplaying.
+## Notes-ptBR: Addon to display actual weather for roleplaying.
+## Notes-ruRU: Addon to display actual weather for roleplaying.
+## Notes-zhCN: Addon to display actual weather for roleplaying.
+## Notes-zhTW: Addon to display actual weather for roleplaying.
+## Author: GnomTEC
+## Version: 5.4.2.1
+## SavedVariablesPerCharacter: GnomTEC_Weather_Options
+
+embeds.xml
+
+locale\locale.xml
+
+GnomTEC_Weather.lua
+GnomTEC_Weather.xml
