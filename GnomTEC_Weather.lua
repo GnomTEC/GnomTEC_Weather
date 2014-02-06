@@ -1,6 +1,6 @@
 ﻿-- **********************************************************************
 -- GnomTEC Weather
--- Version: 5.4.2.2
+-- Version: 5.4.2.3
 -- Author: GnomTEC
 -- Copyright 2014 by GnomTEC
 -- http://www.gnomtec.de/
@@ -169,7 +169,7 @@ local optionsWeather = {
 				WeatherOptionMorningPictogramTexture = {
 					type = "description",
 					name = "",
-					image = function(info) return weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["PICTOGRAM"]] end,
+					image = function(info) return weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MORNING"]["PICTOGRAM"]] end,
 					imageCoords = {0.0,1.0,0.0,1.0},
 					imageWidth = 32,
 					imageHeight = 32,
@@ -182,16 +182,16 @@ local optionsWeather = {
 					name = L["L_OPTIONS_WEATHER_PICTOGRAM"],
 					values =  weatherTexturesDayList,
 					desc = "",
-					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["PICTOGRAM"] = val end,
-					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["PICTOGRAM"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MORNING"]["PICTOGRAM"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MORNING"]["PICTOGRAM"] end,
 					order = 1
 				},
 				WeatherOptionMorningWeather = {
 					type = "input",
 					name = L["L_OPTIONS_WEATHER_DESCRIPTION"],
 					desc = "",
-					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["DESCRIPTION"] = val end,
-					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MORNING"]["DESCRIPTION"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MORNING"]["DESCRIPTION"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MORNING"]["DESCRIPTION"] end,
 					multiline = 5,
 					width = 'full',
 					order = 2
@@ -207,7 +207,7 @@ local optionsWeather = {
 				WeatherOptionMiddayPictogramTexture = {
 					type = "description",
 					name = "",
-					image = function(info) return weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["PICTOGRAM"]] end,
+					image = function(info) return weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MIDDAY"]["PICTOGRAM"]] end,
 					imageCoords = {0.0,1.0,0.0,1.0},
 					imageWidth = 32,
 					imageHeight = 32,
@@ -220,16 +220,16 @@ local optionsWeather = {
 					name = L["L_OPTIONS_WEATHER_PICTOGRAM"],
 					values =  weatherTexturesDayList,
 					desc = "",
-					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["PICTOGRAM"] = val end,
-					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["PICTOGRAM"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MIDDAY"]["PICTOGRAM"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MIDDAY"]["PICTOGRAM"] end,
 					order = 1
 				},
 				WeatherOptionMiddayWeather = {
 					type = "input",
 					name = L["L_OPTIONS_WEATHER_DESCRIPTION"],
 					desc = "",
-					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["DESCRIPTION"] = val end,
-					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["MIDDAY"]["DESCRIPTION"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MIDDAY"]["DESCRIPTION"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["MIDDAY"]["DESCRIPTION"] end,
 					multiline = 5,
 					width = 'full',
 					order = 2
@@ -245,7 +245,7 @@ local optionsWeather = {
 				WeatherOptionEveningPictogramTexture = {
 					type = "description",
 					name = "",
-					image = function(info) return weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["PICTOGRAM"]] end,
+					image = function(info) return weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["EVENING"]["PICTOGRAM"]] end,
 					imageCoords = {0.0,1.0,0.0,1.0},
 					imageWidth = 32,
 					imageHeight = 32,
@@ -258,16 +258,16 @@ local optionsWeather = {
 					name = L["L_OPTIONS_WEATHER_PICTOGRAM"],
 					values =  weatherTexturesDayList,
 					desc = "",
-					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["PICTOGRAM"] = val end,
-					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["PICTOGRAM"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["EVENING"]["PICTOGRAM"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["EVENING"]["PICTOGRAM"] end,
 					order = 1
 				},
 				WeatherOptionEveningWeather = {
 					type = "input",
 					name = L["L_OPTIONS_WEATHER_DESCRIPTION"],
 					desc = "",
-					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["DESCRIPTION"] = val end,
-					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["EVENING"]["DESCRIPTION"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["EVENING"]["DESCRIPTION"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["EVENING"]["DESCRIPTION"] end,
 					multiline = 2,
 					width = 'full',
 					order = 6
@@ -283,7 +283,7 @@ local optionsWeather = {
 				WeatherOptionNightPictogramTexture = {
 					type = "description",
 					name = "",
-					image = function(info) return weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["PICTOGRAM"]] end,
+					image = function(info) return weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["NIGHT"]["PICTOGRAM"]] end,
 					imageCoords = {0.0,1.0,0.0,1.0},
 					imageWidth = 32,
 					imageHeight = 32,
@@ -296,16 +296,16 @@ local optionsWeather = {
 					name = L["L_OPTIONS_WEATHER_PICTOGRAM"],
 					values =  weatherTexturesNightList,
 					desc = "",
-					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["PICTOGRAM"] = val end,
-					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["PICTOGRAM"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["NIGHT"]["PICTOGRAM"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["NIGHT"]["PICTOGRAM"] end,
 					order = 1
 				},
 				WeatherOptionNightWeather = {
 					type = "input",
 					name = L["L_OPTIONS_WEATHER_DESCRIPTION"],
 					desc = "",
-					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["DESCRIPTION"] = val end,
-					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["STORMWIND"]["20140125"]["NIGHT"]["DESCRIPTION"] end,
+					set = function(info,val) GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["NIGHT"]["DESCRIPTION"] = val end,
+					get = function(info) return GnomTEC_Weather.db.realm["Weather"]["Stormwind"]["20140125"]["NIGHT"]["DESCRIPTION"] end,
 					multiline = 5,
 					width = 'full',
 					order = 2
@@ -365,38 +365,38 @@ function GnomTEC_Weather:TimerEvent()
 		actualDate = "20140125"
 		previousDate =	"20140125"
 			
-		if GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate] then
-			if (actualTime >= GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["NIGHT"]["TIME"]) then
-				texture = weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["NIGHT"]["PICTOGRAM"]]
+		if GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate] then
+			if (actualTime >= GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["NIGHT"]["TIME"]) then
+				texture = weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["NIGHT"]["PICTOGRAM"]]
 				title = L["L_NIGHT"].." (20:19 - 06:45):"
-				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["NIGHT"]["DESCRIPTION"]
-			elseif (actualTime >= GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["EVENING"]["TIME"]) then
-				texture = weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["EVENING"]["PICTOGRAM"]]
+				text = GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["NIGHT"]["DESCRIPTION"]
+			elseif (actualTime >= GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["EVENING"]["TIME"]) then
+				texture = weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["EVENING"]["PICTOGRAM"]]
 				title = L["L_EVENING"].." (16:13 - 20:18):"
-				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["EVENING"]["DESCRIPTION"]
-			elseif (actualTime >= GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MIDDAY"]["TIME"]) then
-				texture = weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MIDDAY"]["PICTOGRAM"]]
+				text = GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["EVENING"]["DESCRIPTION"]
+			elseif (actualTime >= GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["MIDDAY"]["TIME"]) then
+				texture = weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["MIDDAY"]["PICTOGRAM"]]
 				title = L["L_MIDDAY"].." (11:43 - 16:12):"
-				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MIDDAY"]["DESCRIPTION"]
-			elseif (actualTime >= GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MORNING"]["TIME"]) then
-				texture = weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MORNING"]["PICTOGRAM"]]
+				text = GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["MIDDAY"]["DESCRIPTION"]
+			elseif (actualTime >= GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["MORNING"]["TIME"]) then
+				texture = weatherTexturesDay[GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["MORNING"]["PICTOGRAM"]]
 				title = L["L_MORNING"].." (06:46 - 11:42):"
-				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][actualDate]["MORNING"]["DESCRIPTION"]
+				text = GnomTEC_Weather.db.realm["Weather"]["Stormwind"][actualDate]["MORNING"]["DESCRIPTION"]
 			else
-				if (GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]) then
-					texture = weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]["NIGHT"]["PICTOGRAM"]]
+				if (GnomTEC_Weather.db.realm["Weather"]["Stormwind"][previousDate]) then
+					texture = weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["Stormwind"][previousDate]["NIGHT"]["PICTOGRAM"]]
 					title = L["L_NIGHT"].." (20:19 - 06:45):"
-					text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]["NIGHT"]["DESCRIPTION"]
+					text = GnomTEC_Weather.db.realm["Weather"]["Stormwind"][previousDate]["NIGHT"]["DESCRIPTION"]
 				else
 					texture = weatherTexturesDay["NONE"]
 					title = L["L_NIGHT"].." (20:19 - 06:45):"
 					text = "|cFFFF0000Keine Wetterdaten im Augenblick!|r|n"			
 				end
 			end
-		elseif (GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate] and (actualTime < 0646)) then
-				texture = weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]["NIGHT"]["PICTOGRAM"]]
+		elseif (GnomTEC_Weather.db.realm["Weather"]["Stormwind"][previousDate] and (actualTime < 0646)) then
+				texture = weatherTexturesNight[GnomTEC_Weather.db.realm["Weather"]["Stormwind"][previousDate]["NIGHT"]["PICTOGRAM"]]
 				title = L["L_NIGHT"].." (20:19 - 06:45):"
-				text = GnomTEC_Weather.db.realm["Weather"]["STORMWIND"][previousDate]["NIGHT"]["DESCRIPTION"]		
+				text = GnomTEC_Weather.db.realm["Weather"]["Stormwind"][previousDate]["NIGHT"]["DESCRIPTION"]		
 		else
 			texture = weatherTexturesDay["NONE"]
 			title = ""

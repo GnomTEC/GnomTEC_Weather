@@ -1,5 +1,8 @@
 == GnomTEC Weather Addon - Change History 
 
+=== 5.4.2.3 (2014-02-06)
+* Fixed error with default which leads to malfunctioning addon
+
 === 5.4.2.2 (2014-02-03)
 * Changed history.txt to WikiCreole format
 * Added .pkgmeta file for Curse.com
