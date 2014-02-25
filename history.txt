@@ -1,4 +1,7 @@
-== GnomTEC Weather Addon - Change History 
+== GnomTEC Weather - Change History 
+
+=== 5.4.7.4 (2014-02-25)
+* Added support of GnomTEC_Assistant.
 
 === 5.4.2.3 (2014-02-06)
 * Fixed error with default which leads to malfunctioning addon

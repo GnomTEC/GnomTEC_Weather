@@ -1,6 +1,6 @@
 ﻿-- **********************************************************************
 -- GnomTEC Weather
--- Version: 5.4.2.3
+-- Version: 5.4.7.4
 -- Author: GnomTEC
 -- Copyright 2014 by GnomTEC
 -- http://www.gnomtec.de/
@@ -11,6 +11,30 @@ local L = LibStub("AceLocale-3.0"):GetLocale("GnomTEC_Weather")
 -- ----------------------------------------------------------------------
 -- Addon global Constants (local)
 -- ----------------------------------------------------------------------
+
+-- internal used version number since WoW only updates from TOC on game start
+local addonVersion = "5.4.7.4"
+
+-- addonInfo for addon registration to GnomTEC API
+local addonInfo = {
+	["Name"] = "GnomTEC Weather",
+	["Version"] = addonVersion,
+	["Date"] = "2014-02-25",
+	["Author"] = "GnomTEC",
+	["Email"] = "info@gnomtec.de",
+	["Website"] = "http://www.gnomtec.de/",
+	["Copyright"] = "(c)2014 by GnomTEC",
+}
+
+-- GnomTEC API revision
+local GNOMTEC_REVISION = 0
+
+-- Log levels
+local LOG_FATAL 	= 0
+local LOG_ERROR	= 1
+local LOG_WARN		= 2
+local LOG_INFO 	= 3
+local LOG_DEBUG 	= 4
 
 -- default data for database
 local defaultsDb = {
@@ -115,32 +139,32 @@ local optionsMain = {
 			name = "About",
 			type = "group",
 			guiInline = true,
-			order = 4,
+			order = 2,
 			args = {
 				descriptionVersion = {
 				order = 1,
 				type = "description",			
-				name = "|cffffd700".."Version"..": ".._G["GREEN_FONT_COLOR_CODE"]..GetAddOnMetadata("GnomTEC_Weather", "Version"),
+				name = "|cffffd700".."Version"..": ".._G["GREEN_FONT_COLOR_CODE"]..addonInfo["Version"],
 				},
 				descriptionAuthor = {
 					order = 2,
 					type = "description",
-					name = "|cffffd700".."Autor"..": ".."|cffff8c00".."GnomTEC",
+					name = "|cffffd700".."Author"..": ".."|cffff8c00"..addonInfo["Author"],
 				},
 				descriptionEmail = {
 					order = 3,
 					type = "description",
-					name = "|cffffd700".."Email"..": ".._G["HIGHLIGHT_FONT_COLOR_CODE"].."info@gnomtec.de",
+					name = "|cffffd700".."Email"..": ".._G["HIGHLIGHT_FONT_COLOR_CODE"]..addonInfo["Email"],
 				},
 				descriptionWebsite = {
 					order = 4,
 					type = "description",
-					name = "|cffffd700".."Website"..": ".._G["HIGHLIGHT_FONT_COLOR_CODE"].."http://www.gnomtec.de/",
+					name = "|cffffd700".."Website"..": ".._G["HIGHLIGHT_FONT_COLOR_CODE"]..addonInfo["Website"],
 				},
 				descriptionLicense = {
 					order = 5,
 					type = "description",
-					name = "|cffffd700".."Copyright"..": ".._G["HIGHLIGHT_FONT_COLOR_CODE"].."(c)2014 by GnomTEC",
+					name = "|cffffd700".."Copyright"..": ".._G["HIGHLIGHT_FONT_COLOR_CODE"]..addonInfo["Copyright"],
 				},
 			}
 		},
@@ -322,7 +346,25 @@ local optionsWeather = {
 
 GnomTEC_Weather = LibStub("AceAddon-3.0"):NewAddon("GnomTEC_Weather", "AceConsole-3.0", "AceEvent-3.0", "AceHook-3.0")
 
+-- ----------------------------------------------------------------------
+-- Local stubs for the GnomTEC API
+-- ----------------------------------------------------------------------
 
+local function GnomTEC_LogMessage(level, message)
+	if (GnomTEC) then
+		GnomTEC:LogMessage(GnomTEC_Weather, level, message)
+	else
+		if (level < LOG_DEBUG) then
+			GnomTEC_Weather:Print(message)
+		end
+	end
+end
+
+local function GnomTEC_RegisterAddon()
+	if (GnomTEC) then
+		GnomTEC:RegisterAddon(GnomTEC_Weather, addonInfo, GNOMTEC_REVISION)
+	end 
+end
 
 -- ----------------------------------------------------------------------
 -- Local functions
@@ -443,13 +485,14 @@ function GnomTEC_Weather:OnInitialize()
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("GnomTEC Weather Main", "GnomTEC Weather");
 	panelConfiguration = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("GnomTEC Weather Weather", L["L_OPTIONS_WEATHER"], "GnomTEC Weather");
 
-  	GnomTEC_Weather:Print(L["L_WELCOME"])
-end
+  	GnomTEC_RegisterAddon()
+  	GnomTEC_LogMessage(LOG_INFO, L["L_WELCOME"])
+  end
 
 function GnomTEC_Weather:OnEnable()
     -- Called when the addon is enabled
 
-	GnomTEC_Weather:Print("GnomTEC_Weather Enabled")
+	GnomTEC_LogMessage(LOG_INFO, "GnomTEC_Weather Enabled")
 
 	-- Initialize options which are propably not valid because they are new added in new versions of addon
 end
