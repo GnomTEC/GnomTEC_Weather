@@ -1,6 +1,6 @@
 ﻿-- **********************************************************************
 -- GnomTEC Weather
--- Version: 5.4.7.4
+-- Version: 5.4.7.5
 -- Author: GnomTEC
 -- Copyright 2014 by GnomTEC
 -- http://www.gnomtec.de/
@@ -13,7 +13,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("GnomTEC_Weather")
 -- ----------------------------------------------------------------------
 
 -- internal used version number since WoW only updates from TOC on game start
-local addonVersion = "5.4.7.4"
+local addonVersion = "5.4.7.5"
 
 -- addonInfo for addon registration to GnomTEC API
 local addonInfo = {
@@ -464,6 +464,50 @@ function GnomTEC_Weather:OpenConfiguration()
 	InterfaceOptionsFrame_OpenToCategory(panelConfiguration)
 end
 
+local lastRainEvent = 0
+local stepRain = -1
+
+function GnomTEC_Weather:DoRain()
+	if (stepRain >= 0) then
+		local t = GetTime()
+
+		-- change rainevery 0.05 seconds
+		if ((t-lastRainEvent) > 0.05) then
+			lastRainEvent = t
+			
+			stepRain = stepRain + 8
+			if (stepRain > 256) then
+				stepRain = 0
+			end
+		
+			local minDown = (256-stepRain)/2048
+			local maxDown = (2048-stepRain)/2048
+			local minRight = minDown
+			local maxRight = maxDown
+			local minLeft = (stepRain)/2048
+			local maxLeft = (2048-256+stepRain)/2048
+
+			GNOMTEC_WEATHER_EFFECT.Rain0:SetTexCoord(minLeft, maxLeft, minDown, maxDown)
+			GNOMTEC_WEATHER_EFFECT.Rain1:SetTexCoord(minRight, maxRight, minDown, maxDown)
+			GNOMTEC_WEATHER_EFFECT.Rain2:SetTexCoord(minLeft, maxLeft, minDown, maxDown)
+		end	
+	end 
+end
+
+function GnomTEC_Weather:SetEffect(effect)
+	if (1 == effect) then
+		GNOMTEC_WEATHER_EFFECT.Rain0:SetAlpha(0.10)
+		GNOMTEC_WEATHER_EFFECT.Rain1:SetAlpha(0.08)
+		GNOMTEC_WEATHER_EFFECT.Rain2:SetAlpha(0.15)
+		stepRain = 0
+		
+	else
+		GNOMTEC_WEATHER_EFFECT.Rain0:SetAlpha(0.0)
+		GNOMTEC_WEATHER_EFFECT.Rain1:SetAlpha(0.0)
+		GNOMTEC_WEATHER_EFFECT.Rain2:SetAlpha(0.0)
+		stepRain = -1
+	end
+end
 -- ----------------------------------------------------------------------
 -- Hook functions
 -- ----------------------------------------------------------------------

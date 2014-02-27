@@ -1,5 +1,8 @@
 == GnomTEC Weather - Change History 
 
+=== 5.4.7.5 (2014-02-27)
+* First implementation of weather effect (rain) (switchable with toolbar)
+
 === 5.4.7.4 (2014-02-25)
 * Added support of GnomTEC_Assistant.
 
