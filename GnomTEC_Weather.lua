@@ -1,6 +1,6 @@
 ﻿-- **********************************************************************
 -- GnomTEC Weather
--- Version: 5.4.7.5
+-- Version: 5.4.7.6
 -- Author: GnomTEC
 -- Copyright 2014 by GnomTEC
 -- http://www.gnomtec.de/
@@ -13,13 +13,13 @@ local L = LibStub("AceLocale-3.0"):GetLocale("GnomTEC_Weather")
 -- ----------------------------------------------------------------------
 
 -- internal used version number since WoW only updates from TOC on game start
-local addonVersion = "5.4.7.5"
+local addonVersion = "5.4.7.6"
 
 -- addonInfo for addon registration to GnomTEC API
 local addonInfo = {
 	["Name"] = "GnomTEC Weather",
 	["Version"] = addonVersion,
-	["Date"] = "2014-02-25",
+	["Date"] = "2014-03-15",
 	["Author"] = "GnomTEC",
 	["Email"] = "info@gnomtec.de",
 	["Website"] = "http://www.gnomtec.de/",
@@ -351,19 +351,12 @@ GnomTEC_Weather = LibStub("AceAddon-3.0"):NewAddon("GnomTEC_Weather", "AceConsol
 -- ----------------------------------------------------------------------
 
 local function GnomTEC_LogMessage(level, message)
-	if (GnomTEC) then
-		GnomTEC:LogMessage(GnomTEC_Weather, level, message)
-	else
-		if (level < LOG_DEBUG) then
-			GnomTEC_Weather:Print(message)
-		end
+	if (level < LOG_DEBUG) then
+		GnomTEC_Weather:Print(message)
 	end
 end
 
 local function GnomTEC_RegisterAddon()
-	if (GnomTEC) then
-		GnomTEC:RegisterAddon(GnomTEC_Weather, addonInfo, GNOMTEC_REVISION)
-	end 
 end
 
 -- ----------------------------------------------------------------------
@@ -489,7 +482,7 @@ function GnomTEC_Weather:DoRain()
 
 			GNOMTEC_WEATHER_EFFECT.Rain0:SetTexCoord(minLeft, maxLeft, minDown, maxDown)
 			GNOMTEC_WEATHER_EFFECT.Rain1:SetTexCoord(minRight, maxRight, minDown, maxDown)
-			GNOMTEC_WEATHER_EFFECT.Rain2:SetTexCoord(minLeft, maxLeft, minDown, maxDown)
+			GNOMTEC_WEATHER_EFFECT.Rain2:SetTexCoord(0, 1, minDown, maxDown)
 		end	
 	end 
 end
