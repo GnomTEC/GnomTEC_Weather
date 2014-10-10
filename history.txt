@@ -1,5 +1,8 @@
 == GnomTEC Weather - Change History 
 
+=== 5.4.8.7 (2014-10-10)
+* Maintenance update for 6.0.2 preparation (updated libs)
+
 === 5.4.7.6 (2014-03-15)
 * Maintenance update
 
