@@ -1,5 +1,8 @@
 == GnomTEC Weather - Change History 
 
+=== 6.0.3.9 (2014-11-30)
+* First implementation of weather effect (rain) (switchable with toolbar)
+
 === 6.0.2.8 (2014-10-15)
 * Updated TOC for WoW Patch 6.0.2
 * Updated libraries to actual versions released for WoW Patch 6.0.2

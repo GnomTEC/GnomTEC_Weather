@@ -218,7 +218,7 @@
 	</Frame>
 
 	<Frame name="GNOMTEC_WEATHER_TOOLBAR" parent="UIParent" toplevel="true" movable="true" resizable="false" clampedToScreen="true" hidden="false">
-		<Size x="42" y="26" />
+		<Size x="60" y="26" />
 		<Anchors>
 			<Anchor point="CENTER" relativePoint="CENTER"/>
 		</Anchors>
@@ -261,6 +261,22 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
+			<CheckButton name="$parent_SNOW">
+				<Size x="16" y="16" />
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent_RAIN">
+						<Offset x="2" y="0" />
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GnomTEC_Weather\Textures\cloud_snow" />
+				<CheckedTexture file="Interface\AddOns\GnomTEC_Weather\Textures\cloud_snow" />
+				<HighlightTexture file="Interface\AddOns\GnomTEC_Weather\Textures\cloud_snow" alphaMode="ADD"/>
+				<Scripts>
+					<OnClick>
+						GnomTEC_Weather:SetEffect(2)
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 		</Frames>
 		<Scripts>
 			<OnMouseDown>
@@ -291,10 +307,22 @@
     			<Texture name="$parent_Rain2" file="Interface\AddOns\GnomTEC_Weather\Textures\rain0" alphaMode="BLEND" setAllPoints="true" parentKey="Rain2" alpha="0.0">
     			</Texture>
     		</Layer>
+			<Layer level="BACKGROUND" textureSubLevel="-1">
+    			<Texture name="$parent_Snow0" file="Interface\AddOns\GnomTEC_Weather\Textures\snow0" alphaMode="BLEND" setAllPoints="true" parentKey="Snow0" alpha="0.0">
+    			</Texture>
+    		</Layer>
+			<Layer level="BACKGROUND" textureSubLevel="-2">
+    			<Texture name="$parent_Snow1" file="Interface\AddOns\GnomTEC_Weather\Textures\snow0" alphaMode="BLEND" setAllPoints="true" parentKey="Snow1" alpha="0.0">
+    			</Texture>
+    		</Layer>
+			<Layer level="BACKGROUND" textureSubLevel="-3">
+    			<Texture name="$parent_Snow2" file="Interface\AddOns\GnomTEC_Weather\Textures\snow0" alphaMode="BLEND" setAllPoints="true" parentKey="Snow2" alpha="0.0">
+    			</Texture>
+    		</Layer>
 		</Layers>
 		<Scripts>
 			<OnUpdate>
-				GnomTEC_Weather:DoRain();
+				GnomTEC_Weather:DoEffect();
 			</OnUpdate>
 		</Scripts>
 	</Frame>

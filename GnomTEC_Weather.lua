@@ -1,6 +1,6 @@
 ﻿-- **********************************************************************
 -- GnomTEC Weather
--- Version: 6.0.2.8
+-- Version: 6.0.3.9
 -- Author: GnomTEC
 -- Copyright 2014 by GnomTEC
 -- http://www.gnomtec.de/
@@ -120,6 +120,10 @@ local weatherTexturesNight = {
 	["NIGHT_CLOUDY_SNOW"] 	= "Interface\\AddOns\\GnomTEC_Weather\\Textures\\cloud_snow",
 }
 	
+local EFFECT_NONE = 0
+local EFFECT_RAIN = 1
+local EFFECT_SNOW = 2
+
 -- ----------------------------------------------------------------------
 -- Addon global variables (local)
 -- ----------------------------------------------------------------------
@@ -457,16 +461,17 @@ function GnomTEC_Weather:OpenConfiguration()
 	InterfaceOptionsFrame_OpenToCategory(panelConfiguration)
 end
 
-local lastRainEvent = 0
+local lastEffectEvent = 0
 local stepRain = -1
+local stepSnow = -1
 
-function GnomTEC_Weather:DoRain()
+function GnomTEC_Weather:DoEffect()
 	if (stepRain >= 0) then
 		local t = GetTime()
 
-		-- change rainevery 0.05 seconds
-		if ((t-lastRainEvent) > 0.05) then
-			lastRainEvent = t
+		-- change rain every 0.05 seconds
+		if ((t-lastEffectEvent) > 0.05) then
+			lastEffectEvent = t
 			
 			stepRain = stepRain + 8
 			if (stepRain > 256) then
@@ -484,21 +489,63 @@ function GnomTEC_Weather:DoRain()
 			GNOMTEC_WEATHER_EFFECT.Rain1:SetTexCoord(minRight, maxRight, minDown, maxDown)
 			GNOMTEC_WEATHER_EFFECT.Rain2:SetTexCoord(0, 1, minDown, maxDown)
 		end	
+	elseif (stepSnow >= 0) then
+		local t = GetTime()
+
+		-- change snow every 0.05 seconds
+		if ((t-lastEffectEvent) > 0.05) then
+			lastEffectEvent = t
+			
+			stepSnow = stepSnow + 8
+			if (stepSnow >= 256) then
+				stepSnow = 0
+			end
+			
+			local minDown = (256-stepSnow)/2048
+			local maxDown = (2048-stepSnow)/2048
+			local minRight = (256-stepSnow/2)/2048
+			local maxRight = (2048-stepSnow/2)/2048
+			local minLeft = (stepSnow/2)/2048
+			local maxLeft = (2048-256+stepSnow/2)/2048
+
+			GNOMTEC_WEATHER_EFFECT.Snow0:SetTexCoord(minLeft, maxLeft, minDown, maxDown)
+			GNOMTEC_WEATHER_EFFECT.Snow1:SetTexCoord(minRight, maxRight, minDown, maxDown)
+			GNOMTEC_WEATHER_EFFECT.Snow2:SetTexCoord(0, 1, minDown, maxDown)
+		end	
 	end 
 end
 
 function GnomTEC_Weather:SetEffect(effect)
-	if (1 == effect) then
+	if (EFFECT_RAIN == effect) then
+		GNOMTEC_WEATHER_EFFECT.Snow0:SetAlpha(0.0)
+		GNOMTEC_WEATHER_EFFECT.Snow1:SetAlpha(0.0)
+		GNOMTEC_WEATHER_EFFECT.Snow2:SetAlpha(0.0)
+		stepSnow = -1
+
 		GNOMTEC_WEATHER_EFFECT.Rain0:SetAlpha(0.10)
 		GNOMTEC_WEATHER_EFFECT.Rain1:SetAlpha(0.08)
 		GNOMTEC_WEATHER_EFFECT.Rain2:SetAlpha(0.15)
 		stepRain = 0
-		
+	elseif (EFFECT_SNOW == effect) then
+		GNOMTEC_WEATHER_EFFECT.Rain0:SetAlpha(0.0)
+		GNOMTEC_WEATHER_EFFECT.Rain1:SetAlpha(0.0)
+		GNOMTEC_WEATHER_EFFECT.Rain2:SetAlpha(0.0)
+		stepRain = -1
+
+		GNOMTEC_WEATHER_EFFECT.Snow0:SetAlpha(0.10)
+		GNOMTEC_WEATHER_EFFECT.Snow1:SetAlpha(0.08)
+		GNOMTEC_WEATHER_EFFECT.Snow2:SetAlpha(0.15)
+		stepSnow = 0
 	else
 		GNOMTEC_WEATHER_EFFECT.Rain0:SetAlpha(0.0)
 		GNOMTEC_WEATHER_EFFECT.Rain1:SetAlpha(0.0)
 		GNOMTEC_WEATHER_EFFECT.Rain2:SetAlpha(0.0)
 		stepRain = -1
+
+		GNOMTEC_WEATHER_EFFECT.Snow0:SetAlpha(0.0)
+		GNOMTEC_WEATHER_EFFECT.Snow1:SetAlpha(0.0)
+		GNOMTEC_WEATHER_EFFECT.Snow2:SetAlpha(0.0)
+		stepSnow = -1
 	end
 end
 -- ----------------------------------------------------------------------
