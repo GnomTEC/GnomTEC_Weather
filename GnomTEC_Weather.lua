@@ -1,8 +1,8 @@
 ﻿-- **********************************************************************
 -- GnomTEC Weather
--- Version: 6.0.3.9
+-- Version: 6.1.0.10
 -- Author: GnomTEC
--- Copyright 2014 by GnomTEC
+-- Copyright 2014-2015 by GnomTEC
 -- http://www.gnomtec.de/
 -- **********************************************************************
 -- load localization first.
@@ -13,17 +13,17 @@ local L = LibStub("AceLocale-3.0"):GetLocale("GnomTEC_Weather")
 -- ----------------------------------------------------------------------
 
 -- internal used version number since WoW only updates from TOC on game start
-local addonVersion = "6.0.2.8"
+local addonVersion = "6.1.0.10"
 
 -- addonInfo for addon registration to GnomTEC API
 local addonInfo = {
 	["Name"] = "GnomTEC Weather",
 	["Version"] = addonVersion,
-	["Date"] = "2014-10-15",
+	["Date"] = "2015-02-25",
 	["Author"] = "GnomTEC",
 	["Email"] = "info@gnomtec.de",
 	["Website"] = "http://www.gnomtec.de/",
-	["Copyright"] = "(c)2014 by GnomTEC",
+	["Copyright"] = "(c)2014-2015 by GnomTEC",
 }
 
 -- GnomTEC API revision
