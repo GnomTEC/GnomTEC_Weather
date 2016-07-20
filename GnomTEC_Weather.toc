@@ -1,4 +1,4 @@
-## Interface: 60200
+## Interface: 70000
 ## Title: GnomTEC_Weather
 ## Notes: Addon to display actual weather for roleplaying.
 ## Notes-deDE: Addon zur Anzeige des aktuellen Wetters für das Rollenspiel.
@@ -12,7 +12,7 @@
 ## Notes-zhCN: Addon to display actual weather for roleplaying.
 ## Notes-zhTW: Addon to display actual weather for roleplaying.
 ## Author: GnomTEC
-## Version: 6.2.0.11
+## Version: 7.0.3.12
 ## SavedVariables: GnomTEC_WeatherDB
 
 embeds.xml
