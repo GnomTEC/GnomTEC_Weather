@@ -1,5 +1,9 @@
 == GnomTEC Weather - Change History 
 
+=== 7.3.0.15 (2017-08-30)
+* Updated TOC for WoW patch 7.3.0
+* Updated included libraries: Ace3
+
 === 7.2.0.14 (2017-04-01)
 * Updated TOC for WoW patch 7.2.0
 
