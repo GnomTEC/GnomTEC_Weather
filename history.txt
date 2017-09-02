@@ -1,5 +1,8 @@
 == GnomTEC Weather - Change History 
 
+=== 7.3.0.16 (2017-09-02)
+* fixed PlaySound() issues
+
 === 7.3.0.15 (2017-08-30)
 * Updated TOC for WoW patch 7.3.0
 * Updated included libraries: Ace3
