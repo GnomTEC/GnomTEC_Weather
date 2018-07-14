@@ -1,5 +1,10 @@
 == GnomTEC Weather - Change History 
 
+=== 8.0.1.17 (2018-07-14)
+* Updated TOC for WoW patch 8.0.0 (BfA)
+* Updated libraries: Ace3, ChatThrottleLib
+* Fix part with removed wow API function CalendarGetDate()
+
 === 7.3.0.16 (2017-09-02)
 * fixed PlaySound() issues
 

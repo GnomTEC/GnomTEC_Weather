@@ -286,7 +286,7 @@
 		</Scripts>
 	</Frame>
 
-	<Frame name="GNOMTEC_WEATHER_EFFECT" parent="UIParent" frameStrata="BACKGROUND" frameLevel="0" setAllPoints="true" hidden="false">
+	<Frame name="GNOMTEC_WEATHER_EFFECT" parent="UIParent" frameStrata="BACKGROUND" frameLevel="1" setAllPoints="true" hidden="false">
 		<Layers>
 			<Layer level="BACKGROUND" textureSubLevel="0">
     			<Texture name="$parent_NILight" file="Interface\AddOns\GnomTEC_Weather\Textures\nightvision" alphaMode="BLEND" setAllPoints="true" parentKey="Light" alpha="0.0">

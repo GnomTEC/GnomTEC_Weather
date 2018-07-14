@@ -1,8 +1,8 @@
 ﻿-- **********************************************************************
 -- GnomTEC Weather
--- Version: 7.3.0.16
+-- Version: 8.0.1.17
 -- Author: GnomTEC
--- Copyright 2014-2017 by GnomTEC
+-- Copyright 2014-2018 by GnomTEC
 -- http://www.gnomtec.de/
 -- **********************************************************************
 -- load localization first.
@@ -13,17 +13,17 @@ local L = LibStub("AceLocale-3.0"):GetLocale("GnomTEC_Weather")
 -- ----------------------------------------------------------------------
 
 -- internal used version number since WoW only updates from TOC on game start
-local addonVersion = "7.3.0.16"
+local addonVersion = "8.0.1.17"
 
 -- addonInfo for addon registration to GnomTEC API
 local addonInfo = {
 	["Name"] = "GnomTEC Weather",
 	["Version"] = addonVersion,
-	["Date"] = "2017-09-02",
+	["Date"] = "2018-07-14",
 	["Author"] = "GnomTEC",
 	["Email"] = "info@gnomtec.de",
 	["Website"] = "http://www.gnomtec.de/",
-	["Copyright"] = "(c)2014-2017 by GnomTEC",
+	["Copyright"] = "(c)2014-2018 by GnomTEC",
 }
 
 -- GnomTEC API revision
@@ -388,16 +388,16 @@ function GnomTEC_Weather:TimerEvent()
 		
 		local hour,minute = GetGameTime();
 		local actualTime = hour*100 + minute
-		local	weekday, month, day, year = CalendarGetDate();
+		local calendarTime = C_Calendar.GetDate();
 
-		local actualDate = string.format("%04u%02u%02u",year,month,day)
+		local actualDate = string.format("%04u%02u%02u",calendarTime.year,calendarTime.month,calendarTime.monthDay)
 		local previousDate
-		if (day > 1) then
-			previousDate = string.format("%04u%02u%02u",year,month,day-1)
-		elseif (month > 1) then
-			previousDate = string.format("%04u%02u%02u",year,month-1,select(3,CalendarGetAbsMonth(month-1, year)))
+		if (calendarTime.monthDay > 1) then
+			previousDate = string.format("%04u%02u%02u",calendarTime.year,calendarTime.month,calendarTime.monthDay-1)
+		elseif (calendarTime.month > 1) then
+			previousDate = string.format("%04u%02u%02u",calendarTime.year,calendarTime.month-1,select(3,CalendarGetAbsMonth(calendarTime.month-1, calendarTime.year)))
 		else
-			previousDate = string.format("%04u%02u%02u",year-1,12,31)
+			previousDate = string.format("%04u%02u%02u",calendarTime.year-1,12,31)
 		end
 		
 		--- Beta version data only for one same day (date not shown yet)
