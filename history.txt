@@ -1,5 +1,9 @@
 == GnomTEC Weather - Change History 
 
+=== 8.1.0.18 (2019-01-05)
+* Updated TOC for WoW patch 8.1.0 (BfA)
+* Updated libraries: Ace3
+
 === 8.0.1.17 (2018-07-14)
 * Updated TOC for WoW patch 8.0.0 (BfA)
 * Updated libraries: Ace3, ChatThrottleLib
